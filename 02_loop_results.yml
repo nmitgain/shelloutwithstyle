@@ -1,0 +1,14 @@
+---
+- hosts: all
+  gather_facts: no
+  vars:
+    playbook: 
+      name: 02_loop_results.yml
+      version: "2021060102"
+  tasks:
+    - name: Show "results" in Loops 
+      include_role:
+        name: loop_results
+        tasks_from: main
+...
+

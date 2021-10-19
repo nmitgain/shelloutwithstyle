@@ -1,0 +1,4 @@
+---
+dbname: sample
+dbuser: "{{ db2_instance }}"
+...

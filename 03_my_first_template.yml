@@ -1,0 +1,13 @@
+---
+- hosts: db2server 
+  gather_facts: no
+  vars:
+    playbook: 
+      name: 03_my_first_template.yml
+  tasks:
+    - name: Start role my_first_template 
+      include_role:
+        name: my_first_template
+        tasks_from: main
+...
+

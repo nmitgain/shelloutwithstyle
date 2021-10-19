@@ -1,0 +1,4 @@
+. ~{{ db2_instance }}/.profile &&
+db2 connect to {{ dbname }} > /dev/null 2>&1 &&
+db2 -x "SELECT 'HELLO WORLD!'
+          FROM sysibm.sysdummy1"
