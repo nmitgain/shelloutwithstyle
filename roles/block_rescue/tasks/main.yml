@@ -12,7 +12,7 @@
   rescue:
 
   - name: Create Table SOMEIDUGSTUFF
-    shell: "{{ lookup('template','crate_table_someidugstuff.j2') }}"
+    shell: "{{ lookup('template','create_table_someidugstuff.j2') }}"
     register: shell_result
     become: true
     become_user: '{{ dbuser }}'

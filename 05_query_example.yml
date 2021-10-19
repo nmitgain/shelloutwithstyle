@@ -1,0 +1,13 @@
+---
+- hosts: db2server
+  gather_facts: no
+  vars:
+    playbook: 
+      name: 05_query_example.yml
+  tasks:
+    - name: Start role block_rescue 
+      include_role:
+        name: query_example 
+        tasks_from: main
+...
+

@@ -1,0 +1,31 @@
+---
+- name: Cleanup from previous aborted runs
+  file:
+    path: "{{ tempdir }}"
+    state: absent
+
+- name: Create temporary directory
+  file:
+    path: "{{ tempdir }}"
+    state: directory
+    mode: 0700
+    owner: "{{ dbuser }}"
+
+- name: Select some data
+  shell: "{{ lookup('template','export_data.j2') }}"
+  become: True
+  become_user: "{{ dbuser }}"
+
+- name: Read data from csv
+  read_csv:
+    path: "{{ csv_file }}"
+    delimiter: ";"
+    fieldnames: lastname, firstname
+  become: True
+  become_user: "{{ dbuser }}"
+  register: csv_result
+
+- name: Debug CSV Output
+  debug:
+    var: csv_result
+...

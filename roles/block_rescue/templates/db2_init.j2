@@ -1,0 +1,5 @@
+. ~{{ db2_instance }}/.profile &&
+db2 connect to {{ dbname }} > /dev/null 2>&1 &&
+{% block db2sql %}
+This part will be substituted in Templates extending this
+{% endblock %} 

@@ -1,5 +1,6 @@
-. ~{{ db2_instance }}/.profile &&
-db2 connect to {{ dbname }} > /dev/null 2>&1 &&
+{% extends "db2_init.j2" %}
+{% block db2sql %}
 db2 -x "CREATE TABLE someidugstuff (
           id bigint not null,
           mytext varchar(30))"
+{% endblock %}
