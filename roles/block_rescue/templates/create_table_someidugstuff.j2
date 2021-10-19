@@ -1,4 +1,5 @@
 . ~{{ db2_instance }}/.profile &&
 db2 connect to {{ dbname }} > /dev/null 2>&1 &&
-db2 -x "SELECT 1 FROM syscat.tables 
-           WHERE tabname='SOMEIDUGSTUFF'"
+db2 -x "CREATE TABLE someidugstuff (
+          id bigint not null,
+          mytext varchar(30))"
