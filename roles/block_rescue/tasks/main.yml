@@ -1,0 +1,27 @@
+---
+- name: Ensure that my table is there
+  block:
+
+  - name: Is Table SOMEIDUGSTUFF in the catalog?
+    shell: "{{ lookup('template','find_table_someidugstuff.j2') }}"
+    register: shell_result
+    become: true
+    become_user: "{{ dbuser }}"
+    changed_when: shell_result.rc < 0
+
+  rescue:
+
+  - name: Create Table SOMEIDUGSTUFF
+    shell: "{{ lookup('template','create_table_someidugstuff.j2') }}"
+    register: shell_result
+    become: true
+    become_user: '{{ dbuser }}'
+
+  always:
+
+  - name: Last Output
+    debug:
+      var: shell_result
+      verbosity: 1 # enable with ansible-playbook -v
+
+...

@@ -1,0 +1,18 @@
+---
+- name: Say Hello in Db2!
+  shell: . ~{{ db2_instance }}/.profile && db2 connect to {{ dbname  }} > /dev/null 2>&1 && db2 "SELECT 'Hello World!' from sysibm.sysdummy1"
+  become: True
+  become_user: "{{ dbuser }}"
+  register: shell_result
+  changed_when: shell_result.rc < 0
+
+- name: Print out the output of the shell command
+  debug:
+    var: shell_result.stdout_lines
+
+- name: Print the whole shell_result # run playbook with '-v'
+  debug:
+    var: shell_result
+    verbosity: 1
+...
+

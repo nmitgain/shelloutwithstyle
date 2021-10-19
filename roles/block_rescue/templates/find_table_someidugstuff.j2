@@ -1,0 +1,5 @@
+{% extends "db2_init.j2" %}
+{% block db2sql %}
+db2 -x "SELECT 1 FROM syscat.tables 
+           WHERE tabname='SOMEIDUGSTUFF'"
+{% endblock %}

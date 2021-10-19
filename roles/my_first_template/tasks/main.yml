@@ -1,0 +1,14 @@
+---
+- name: Say Hello in Db2 using an inline template!
+  shell: "{{ lookup('template','helloWorld.j2') }}"
+  become: True
+  become_user: "{{ dbuser }}"
+  register: shell_result
+  changed_when: shell_result.rc < 0  # Status will either be "OK" or "FAIL"
+
+
+- name: Print Result
+  debug:
+    var: shell_result.stdout_lines
+...
+

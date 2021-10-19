@@ -1,0 +1,13 @@
+---
+- hosts: db2server
+  gather_facts: no
+  vars:
+    playbook: 
+      name: 04_block_rescue.yml
+  tasks:
+    - name: Start role block_rescue 
+      include_role:
+        name: block_rescue 
+        tasks_from: main
+...
+

@@ -1,0 +1,6 @@
+{% extends "db2_init.j2" %}
+{% block db2sql %}
+db2 -x "CREATE TABLE someidugstuff (
+          id bigint not null,
+          mytext varchar(30))"
+{% endblock %}

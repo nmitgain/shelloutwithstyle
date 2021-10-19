@@ -1,0 +1,13 @@
+---
+- hosts: all
+  gather_facts: no
+  vars:
+    playbook: 
+      name: 01_hello_world.yml
+  tasks:
+    - name: Start role HelloWorld
+      include_role:
+        name: hello_world
+        tasks_from: main
+...
+

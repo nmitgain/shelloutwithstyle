@@ -1,0 +1,20 @@
+---
+- name: Say Hello in Db2 to a bunch of people!
+  shell: | 
+    . ~{{ db2_instance }}/.profile && 
+    db2 connect to {{ dbname  }} > /dev/null 2>&1 && 
+    db2 "SELECT 'Hello {{ item }}!' from sysibm.sysdummy1"
+  become: True
+  become_user: "{{ dbuser }}"
+  register: shell_result
+  changed_when: shell_result.rc < 0 # this works as shell_result.rc refers to the current instance
+  with_items:
+          - Norbert
+          - Karen
+
+
+- name: Print all results 
+  debug:
+    var: shell_result.results
+...
+
