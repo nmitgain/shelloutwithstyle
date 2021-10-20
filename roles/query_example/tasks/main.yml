@@ -20,7 +20,7 @@
   read_csv:
     path: "{{ csv_file }}"
     delimiter: ";"
-    fieldnames: lastname, firstname
+    fieldnames: lastname,firstname
   become: True
   become_user: "{{ dbuser }}"
   register: csv_result
@@ -34,7 +34,7 @@
   set_fact:
     prettylist: "{{ prettylist | default([]) + [ item.firstname + ' ' + item.lastname ] }}"
   with_items: "{{ csv_result.list }}"
-  no_log: True
+  no_log: False
 
 - name: Print the list
   debug:
