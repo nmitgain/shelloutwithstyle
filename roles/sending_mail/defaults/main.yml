@@ -1,0 +1,7 @@
+---
+dbname: sample
+dbuser: "{{ db2_instance }}"
+tempdir: "/tmp/ansible_sending_mail_{{ansible_host}}"
+csv_file: "{{ tempdir }}/result.csv"
+raw_output: "{{ tempdir }}/db2_output_raw.txt"
+...

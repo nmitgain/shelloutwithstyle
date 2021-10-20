@@ -3,11 +3,11 @@
   gather_facts: no
   vars:
     playbook: 
-      name: 05_query_example.yml
+      name: 06_async_mode.yml
   tasks:
-    - name: Start role query_example 
+    - name: Start role async_mode
       include_role:
-        name: query_example 
+        name: async_mode 
         tasks_from: main
 ...
 

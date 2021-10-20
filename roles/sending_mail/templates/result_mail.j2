@@ -1,0 +1,13 @@
+Hello {{ mail_to_user }},
+
+this is your Ansible system reporting from {{ inventory_hostname }}
+Formatted output:
+
+{% for value in prettylist %}{{ value }}
+{% endfor %}
+
+You can find the output of the Db2 client run and the raw csv output in attached files.
+
+Best regards, 
+
+Your Ansible Team 
