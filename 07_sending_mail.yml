@@ -1,0 +1,13 @@
+---
+- hosts: db2server
+  gather_facts: no
+  vars:
+    playbook: 
+      name: 07_sending_mail.yml
+  tasks:
+    - name: Start role async_mode
+      include_role:
+        name: sending_mail 
+        tasks_from: main
+...
+

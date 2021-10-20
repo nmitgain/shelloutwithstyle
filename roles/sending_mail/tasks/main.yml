@@ -1,0 +1,63 @@
+---
+- name: Export some data and mail the output
+  block:
+
+    - name: Cleanup from previous aborted runs
+      file:
+        path: "{{ tempdir }}"
+        state: absent
+
+    - name: Create temporary directory
+      file:
+        path: "{{ tempdir }}"
+        state: directory
+        mode: 0700
+        owner: "{{ dbuser }}"
+
+    - name: Select some data
+      shell: "{{ lookup('template','export_data.j2') }}"
+      become: True
+      become_user: "{{ dbuser }}"
+
+    - name: Read data from csv
+      read_csv:
+        path: "{{ csv_file }}"
+        delimiter: ";"
+        fieldnames: lastname,firstname
+      become: True
+      become_user: "{{ dbuser }}"
+      register: csv_result
+
+    - name: Debug CSV Output
+      debug:
+        var: csv_result
+        verbosity: 1 # run playbook with "-v" to enable this output
+
+    - name: Generate a list
+      set_fact:
+        prettylist: "{{ prettylist | default([]) + [ item.firstname + ' ' + item.lastname ] }}"
+      with_items: "{{ csv_result.list }}"
+      no_log: False
+
+    - name: Print the list
+      debug:
+        var: prettylist
+        verbosity: 1
+    
+    - name: Send mail if mail_to_user is set
+      mail:
+        from: noreply@itgain.de
+        to: "{{ mail_to_user }}"
+        subject: "Mail from Ansible at {{ inventory_hostname }}"
+        body: "{{ lookup('template','result_mail.j2') }}"
+        attach:
+          - "{{ csv_file }}"
+          - "{{ raw_output }}"
+      become: True
+      become_user: "{{ dbuser }}"
+      when: mail_to_user is defined
+
+
+      
+    
+...

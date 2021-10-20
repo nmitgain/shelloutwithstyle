@@ -1,0 +1,8 @@
+{% extends "db2_init.j2" %}
+{% block db2sql %}
+db2 -v -z {{ raw_output }} "export to {{ csv_file }} of del
+     modified by coldel;
+     select lastname, firstnme from employee
+     order by lastname
+     fetch first 5 rows only" 
+{% endblock%}
