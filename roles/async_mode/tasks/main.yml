@@ -40,6 +40,9 @@
   retries: 20
   poll: 2
 
+- name: fail
+  fail:
+
 - name: Cleanup Cache from async runs
   async_status:
     jid: "{{ item.ansible_job_id }}"
