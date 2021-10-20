@@ -28,4 +28,15 @@
 - name: Debug CSV Output
   debug:
     var: csv_result
+    verbosity: 1 # run playbook with "-v" to enable this output
+
+- name: Generate a list
+  set_fact:
+    prettylist: "{{ prettylist | default([]) + [ item.firstname + ' ' + item.lastname ] }}"
+  with_items: "{{ csv_result.list }}"
+  no_log: True
+
+- name: Print the list
+  debug:
+    var: prettylist
 ...
