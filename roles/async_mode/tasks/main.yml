@@ -1,0 +1,63 @@
+---
+- name: Do nothing for 20 seconds. Check every 2 seconds for completion
+  shell: date && sleep 20 && date
+  async: 30 # maximum time in seconds this task is allowed to run. Task fails if not finished in time
+  poll: 2
+  register: async_task
+
+- name: Continue doing something when long running task is finished
+  debug:
+    msg: "Async task has finished. Output: {{ async_task.stdout_lines }}"
+
+
+- name: Do something again for 30 seconds, but in background
+  shell: date && sleep 20 && date
+  async: 30
+  poll: 0
+  register: background_task
+
+- name: Do something while Background task is still running
+  shell: echo "Foreground Task 1 at $(date)"
+  register: task1
+
+- name: Result task1
+  debug:
+    var: task1.stdout_lines
+
+- name: Do something else while the Background task is still running
+  shell: echo "Forground Task 2 at $(date)"
+  register: task2
+
+- name: Result task2
+  debug:
+    var: task2.stdout_lines
+
+- name: Wait for Background task to finish
+  async_status:
+    jid: "{{ background_task.ansible_job_id }}"
+  register: job_result
+  until: job_result.finished
+  retries: 20
+  poll: 2
+
+- name: Cleanup Cache from async runs
+  async_status:
+    jid: "{{ item.ansible_job_id }}"
+    mode: cleanup
+  with_items:
+    - "{{ background_task }}"
+    - "{{ async_task }}"
+
+- name: Do something else
+  debug:
+    msg: "The End"
+
+
+
+        
+
+
+
+
+...
+
