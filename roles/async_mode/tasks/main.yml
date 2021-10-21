@@ -2,7 +2,7 @@
 - name: Some examples for long running tasks and backgrounding
   block:
   - name: Do nothing for 15 seconds. Check every 2 seconds for completion
-    shell: date && sleep 15 && date
+    shell: echo "This is the Long-Runner with polling" && date && sleep 15 && date
     async: 20 # maximum time in seconds this task is allowed to run. Task fails if not finished in time
     poll: 2
     register: async_task
@@ -13,7 +13,7 @@
 
 
   - name: Do something again for 15 seconds, but in background
-    shell: date && sleep 15 && date
+    shell: echo "Background task without polling" && date && sleep 15 && date
     async: 20
     poll: 0
     register: background_task
