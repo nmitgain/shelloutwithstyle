@@ -58,8 +58,8 @@
         label: "Cleaning cache for job {{ item.ansible_job_id }} on {{ ansible_host }}"
       
 
-    - name: Do something else
-      debug:
-        msg: "The End"
+- name: Do something else
+  debug:
+    msg: "The End"
 ...
 

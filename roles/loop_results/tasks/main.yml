@@ -15,6 +15,6 @@
 
 - name: Print all results 
   debug:
-    var: shell_result.results
+    var: shell_result
 ...
 
